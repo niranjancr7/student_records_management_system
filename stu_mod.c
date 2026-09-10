@@ -52,7 +52,7 @@ void search_rollno(void)
 			printf("Enter the name to update \n");
 			while(1)
 			{
-				scanf("%s",p->name);
+				scanf(" %[^\n]",p->name);
 				int i=0,f1=1;
 				while(p->name[i]!='\0')
 				{
@@ -96,11 +96,11 @@ void search_name(void)
 		return;
 	}
 	struct student *p=head;
-	char name1[10];
+	char name1[20];
 	printf("Enter the name to search \n");
 	while(1)
 	{
-		scanf("%s",name1);
+		scanf(" %[^\n]",name1);
 		int i=0,f1=1;
 		while(name1[i]!='\0')
 		{
@@ -123,17 +123,24 @@ void search_name(void)
 		{
 			f=1;
 			c++;
-			if(c==1)
-			printf("Matching records: \n");
-			printf("%d %s %f\n",p->rollno,p->name,p->percentage);
 		}
 		p=p->next;
 	}
+	p=head;
 	if(f==0)
 	{
 		printf("name not found \n");
 		return;
 	}
+	if(c>1)
+	{
+		printf("Matching records: \n");
+		while(p)
+		{
+			if((strcmp(name1,p->name))==0)
+			printf("%d %s %f\n",p->rollno,p->name,p->percentage);
+			p=p->next;
+		}
 	int num;
 	printf("Enter the rollno of the student to modify \n");
 	while(1)
@@ -142,7 +149,7 @@ void search_name(void)
 	if(num<=0)
 		printf("Invalid rollno enter again \n");
 	else
-		return;
+		break;
 	}
 	int f2=0;
 	p=head;
@@ -154,7 +161,7 @@ void search_name(void)
 			printf("Enter the name to update \n");
 			while(1)
 			{
-				scanf("%s",p->name);
+				scanf(" %[^\n]",p->name);
 				int i=0,f3=1;
 				while(p->name[i]!='\0')
 				{
@@ -188,6 +195,48 @@ void search_name(void)
 		printf("Invalid Rollno \n");
 	else
 		printf("Record Updated successfully \n");
+	}
+	else if(c==1)
+	{
+		while(p)
+		{
+			if((strcmp(name1,p->name))==0)
+			{
+			printf("%d %s %f\n",p->rollno,p->name,p->percentage);
+			break;
+			}
+			p=p->next;
+		}
+			printf("Enter the name to update \n");
+			while(1)
+			{
+				scanf(" %[^\n]",p->name);
+				int i=0,f3=1;
+				while(p->name[i]!='\0')
+				{
+				if(!(p->name[i] >= 'a' && p->name[i] <= 'z') || (p->name[i] >= 'A' && p->name[i] <= 'Z') || p->name[i]== ' ')
+					{
+						f3=0;
+						break;
+					}
+				i++;
+				}
+				if(f3==1)
+					break;
+				printf("Invalid name Enter again \n");
+			}
+			printf("Enter the percentage to update \n");
+			while(1)
+			{
+				scanf("%f",&p->percentage);
+				if(p->percentage > 100 || p->percentage < 0)
+				{
+				printf("Invalid percentage enter again \n");
+				}
+				else
+					break;
+			}
+	}
 }
 
 void search_percentage(void)
@@ -200,16 +249,16 @@ void search_percentage(void)
 	struct student *p=head;
 	float percentage1;
 	printf("Enter the percentage to search \n");
-			while(1)
-			{
-				scanf("%f",&percentage1);
-				if(percentage1 > 100 || percentage1 < 0)
-				{
-				printf("Invalid percentage enter again \n");
-				}
-				else
-					break;
-			}
+	while(1)
+	{
+		scanf("%f",&percentage1);
+		if(percentage1 > 100 || percentage1 < 0)
+		{
+			printf("Invalid percentage enter again \n");
+		}
+		else
+			break;
+	}
 	int f=0;
 	int c=0;
 	while(p)
@@ -218,17 +267,25 @@ void search_percentage(void)
 		{
 			f=1;
 			c++;
-			if(c==1)
-			printf("Matching records: \n");
-			printf("%d %s %f\n",p->rollno,p->name,p->percentage);
 		}
 		p=p->next;
 	}
+	p=head;
 	if(f==0)
 	{
 		printf("Percentage not found \n");
 		return;
 	}
+	p=head;
+	if(c>1)
+	{
+		printf("Matching records: \n");
+		while(p)
+		{
+			if(p->percentage==percentage1)
+			printf("%d %s %f\n",p->rollno,p->name,p->percentage);
+			p=p->next;
+		}
 	int num;
 	printf("Enter the rollno of the student to modify \n");
 	while(1)
@@ -237,7 +294,7 @@ void search_percentage(void)
 	if(num<=0)
 		printf("Invalid rollno enter again \n");
 	else
-		return;
+		break;
 	}
 	int f1=0;
 	p=head;
@@ -249,7 +306,7 @@ void search_percentage(void)
 			printf("Enter the name to update \n");
 			while(1)
 			{
-				scanf("%s",p->name);
+				scanf(" %[^\n]",p->name);
 				int i=0,f3=1;
 				while(p->name[i]!='\0')
 				{
@@ -283,4 +340,46 @@ void search_percentage(void)
 		printf("Invalid Rollno \n");
 	else
 		printf("Record Updated successfully \n");
+	}
+	else if(c==1)
+	{
+		while(p)
+		{
+			if(p->percentage==percentage1)
+			{
+			printf("%d %s %f\n",p->rollno,p->name,p->percentage);
+			break;
+			}
+			p=p->next;
+		}
+			printf("Enter the name to update \n");
+			while(1)
+			{
+				scanf(" %[^\n]",p->name);
+				int i=0,f3=1;
+				while(p->name[i]!='\0')
+				{
+				if(!(p->name[i] >= 'a' && p->name[i] <= 'z') || (p->name[i] >= 'A' && p->name[i] <= 'Z') || p->name[i]== ' ')
+					{
+						f3=0;
+						break;
+					}
+				i++;
+				}
+				if(f3==1)
+					break;
+				printf("Invalid name Enter again \n");
+			}
+			printf("Enter the percentage to update \n");
+			while(1)
+			{
+				scanf("%f",&p->percentage);
+				if(p->percentage > 100 || p->percentage < 0)
+				{
+				printf("Invalid percentage enter again \n");
+				}
+				else
+					break;
+			}
+	}
 }

@@ -11,7 +11,7 @@ void add(void)
 	printf("enter the name \n");
 	while(1)
 	{
-	scanf("%s",new->name);
+	scanf(" %[^\n]",new->name);
 	int i=0,f=1;
 	while(new->name[i]!='\0')
 	{
@@ -61,15 +61,20 @@ void add(void)
 		}
 		new->rollno=num;
 	}
-	if(head==0)
+	if(head==0 || new->rollno < head->rollno)
 	{
+		new->next=head;
 		head=new;
 	}
 	else
 	{
-		struct student *last=head;
-		while(last->next)
-			last=last->next;
-		last->next=new;
+	struct student *p=head;
+	while(p->next != NULL && p->next->rollno < new->rollno)
+        {
+            p = p->next;
+        }
+        new->next = p->next;
+        p->next = new;
 	}
+	printf("Record added successfully\n");
 }

@@ -54,7 +54,7 @@ void del_rollno(void)
 	if(num<=0)
 		printf("Invalid rollno enter again \n");
 	else
-		return;
+		break;
 	}
 	int c1=0;
 	int c=count();
@@ -62,7 +62,7 @@ void del_rollno(void)
 	while(del)
 	{
 		c1++;
-		if(c1==num)
+		if(del->rollno==num)
 		{
 			f=1;
 			if(c1==1)
@@ -98,11 +98,11 @@ void del_name(void)
 		return;
 	}
 	struct student *del=head,*prev=0;
-	char name[10];
+	char name[20];
 	printf("Enter the name \n");
 			while(1)
 			{
-				scanf("%s",name);
+				scanf(" %[^\n]",name);
 				int i=0,f1=1;
 				while(name[i]!='\0')
 				{
@@ -120,6 +120,79 @@ void del_name(void)
 	int c=count();
 	int f=0;
 	int c1=0;
+	int c2=0;
+	struct student*p=head;
+	while(p)
+	{
+		if((strcmp(name,p->name))==0)
+			c2++;
+		p=p->next;
+	}
+	if(c2==0)
+	{
+	printf("Name not found \n");
+	return;
+	}
+	p=head;
+	if(c2>1)
+	{
+	printf("Matching records: \n");
+	while(p)
+	{
+	if((strcmp(name,p->name))==0)
+	{
+	printf("%d %s %f\n",p->rollno,p->name,p->percentage);
+	}
+	p=p->next;
+	}
+	int num;
+	printf("Enter the rollno to delete \n");
+	while(1)
+	{
+	scanf("%d",&num);
+	if(num<=0)
+	printf("Invalid rollno enter again \n");
+	else
+	break;
+	}
+	while(del)
+	{
+		c1++;
+		if((num==del->rollno) && (strcmp(name,del->name))==0)
+		{
+			f=1;
+			if(c1==1)
+			{
+				head=del->next;
+				free(del);
+			}
+			else if(c1>1 && c1<c)
+			{
+				prev->next=del->next;
+				free(del);
+			}
+			else
+			{
+				prev->next=0;
+				free(del);
+			}
+		}
+		prev=del;
+		del=del->next;
+	}
+	printf("Record deleted successfully \n");
+	}
+	else if(c2==1)
+	{
+		while(p)
+		{
+			if((strcmp(name,p->name)==0))
+			{
+			printf("%d %s %f\n",p->rollno,p->name,p->percentage);
+			break;
+			}
+			p=p->next;
+		}
 	while(del)
 	{
 		c1++;
@@ -145,10 +218,8 @@ void del_name(void)
 		prev=del;
 		del=del->next;
 	}
-	if(f==0)
-		printf("Name Not Found \n");
-	else
-		printf("Record deleted successfully \n");
+	printf("Record deleted successfully \n");
+	}
 }
 
 int count(void)
